@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import FormInput from './components/FormInput';
+import DataTable from './components/DataTable';
 import './App.css';
 
 function App() {
+  const [dataList, setDataList] = useState([]);
+  const [showForm, setShowForm] = useState(true);
+
+  const addData = (newData) => {
+    setDataList([...dataList, newData]);
+    setShowForm(false);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {showForm ? (
+        <FormInput onSubmit={addData} />
+      ) : (
+        <DataTable dataList={dataList} onAddNew={() => setShowForm(true)} />
+      )}
     </div>
   );
 }
